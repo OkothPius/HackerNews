@@ -22,7 +22,6 @@ const list = [
     objectID: 1,
   },
 ];
-
 //es5
 // function isSearched(searchTerm) {
 //   return function(item) {
@@ -62,9 +61,9 @@ class App extends Component {
       <div className="App">
         <form>
           <input type="text"
-          onChange={this.onSearchChange} />
+          onChange={this.onSearchChange}/>
         </form>
-        { this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
+        {this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
