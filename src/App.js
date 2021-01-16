@@ -57,21 +57,15 @@ class App extends Component {
   }
 
   render() {
-<<<<<<< HEAD
     const { searchTerm, list } = this.state;
-=======
->>>>>>> 1c7b001fc24b4459587640c7f1882cba94b2b980
     return (
       <div className="App">
         <form>
           <input type="text"
           onChange={this.onSearchChange}/>
         </form>
-<<<<<<< HEAD
         {list.filter(isSearched(searchTerm)).map(item => 
-=======
         {this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
->>>>>>> 1c7b001fc24b4459587640c7f1882cba94b2b980
           <div key={item.objectID}>
             <span>
               <a href={item.url}>{item.title}</a>
@@ -85,7 +79,7 @@ class App extends Component {
 
           </div>
         )}
-      </div>  
+      </div>
     );
   }
 }
