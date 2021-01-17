@@ -117,9 +117,9 @@ const Table = ({list, pattern, onDismiss}) =>
           <span>{item.num_comments}</span>
           <span>{item.points}</span>
           <span>
-            <button onClick={() => this.onDismiss(item.objectID)} type="button">
+            <Button onClick={() => this.onDismiss(item.objectID)} >
               Dismiss
-            </button>
+            </Button>
           </span>
         </div>  
         )}
