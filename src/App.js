@@ -22,13 +22,6 @@ const list = [
     objectID: 1,
   },
 ];
-//es5
-// function isSearched(searchTerm) {
-//   return function(item) {
-//     //some conditions which return true or false
-//     return !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
-//   }
-// }
 
 //es6
 const isSearched = (searchTerm) => (item) =>
@@ -59,38 +52,22 @@ class App extends Component {
   render() {
     const { searchTerm, list } = this.state;
     return (
-      <div className="App">
-         <Search
-        value={searchTerm}
-        onChange={this.onSearchChange} 
-        >
+      <div className="page">
+        <div className="interactions">
+          <Search
+            input type="text"
+            value={searchTerm}
+            onChange={this.onSearchChange} 
+          >
           Search
-        </Search>  
+          </Search> 
+        </div>   
 
-        <Table
-        list={list}
-        pattern={searchTerm}
-        onDismiss={this.onDismiss} 
-        />
-
-        <form>
-          <input type="text"
-          value={searchTerm}
-          onChange={this.onSearchChange}/>
-        </form>
-        {list.filter(isSearched(searchTerm)).map(item => 
-          <div key={item.objectID}>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-             <span>{item.author}</span>
-             <span>{item.num_comments}</span>
-             <span>{item.points}</span>
-             <span>
-               <button onClick={() => this.onDismiss(item.objectID)} type="button">Dismiss</button>
-            </span>
-          </div>
-        )}
+          <Table
+          list={list}
+          pattern={searchTerm}
+          onDismiss={this.onDismiss} 
+          />
       </div>  
     );
   }
@@ -101,35 +78,57 @@ const Search = ({value, onChange, children}) =>
       {children} <input
       type="text"
       value={value}
-      onChange={onchange}
+      onChange={onChange}
       />
     </form>  
 
 
-const Table = ({list, pattern, onDismiss}) =>  
-    <div>
+const Table = ({list, pattern, onDismiss}) => 
+    <div className="table">
       {list.filter(isSearched(pattern)).map(item =>
-        <div key={item.objectID}>
-          <span>
+        <div key={item.objectID} className="table-row">
+          <span style={{ largeColumn}}>
             <a href={item.url}>{item.title}</a>
           </span>
-          <span>{item.author}</span>
-          <span>{item.num_comments}</span>
-          <span>{item.points}</span>
-          <span>
-            <Button onClick={() => this.onDismiss(item.objectID)} >
+          <span style={{ midColumn }}>
+            {item.author}
+          </span>
+          <span style={{ smallColumn}}>
+            {item.num_comments}
+          </span>
+          <span style={{ smallColumn}}>
+            {item.points}
+          </span>
+          <span style={{ smallColumn}}>
+            <Button 
+              onClick={() => onDismiss(item.objectID)}
+              className="button-inline"
+            >
               Dismiss
             </Button>
           </span>
         </div>  
         )}
-    </div>  
+    </div> 
+
+const largeColumn = {
+  width: '40%',
+};     
+
+const midColumn = {
+  width: '10%',
+}; 
+
+const smallColumn = {
+  width: '40%',
+}; 
+
 
 
 const Button = ({onClick, className='', children}) =>
   <button 
   onClick={onClick}
-  className={className}
+  className="button-active"
   type="button">
     {children}
   </button>  
