@@ -39,9 +39,10 @@ class App extends Component {
       .then(result => this.setSearchTopstories(result));
   }
 
-  onSearchSubmit() {
+  onSearchSubmit(event) {
     const { searchTerm } = this.state;
     this.fetchSearchTopstories(searchTerm);
+    event.preventDefault();
   }
 
   componentDidMount() {
@@ -98,9 +99,9 @@ const Search = ({value, onChange, onSubmit, children}) =>
     </form>  
 
 
-const Table = ({list, pattern, onDismiss}) => 
+const Table = ({list, onDismiss}) => 
     <div className="table">
-      {list.filter(isSearched(pattern)).map(item =>
+      {list.map(item =>
         <div key={item.objectID} className="table-row">
           <span style={{ largeColumn}}>
             <a href={item.url}>{item.title}</a>
