@@ -36,21 +36,21 @@ class App extends Component {
     this.setState({ result });
   }
 
-  fetchSearchTopstories(searchTerm) {
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+  fetchSearchTopstories(searchTerm, page) {
+    fetch(`${PATH_BASE}${PARAM_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}\${page}`)
       .then(response => response.json())
       .then(result => this.setSearchTopstories(result));
   }
 
   onSearchSubmit(event) {
     const { searchTerm } = this.state;
-    this.fetchSearchTopstories(searchTerm);
+    this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
     event.preventDefault();
   }
 
   componentDidMount() {
     const { searchTerm } = this.state;
-    this.fetchSearchTopstories(searchTerm);
+    this.fetchSearchTopstories(searchTerm, DEFAULT_PAGE);
   }
 
   onDismiss(id) {
@@ -63,6 +63,7 @@ class App extends Component {
 
   render() {
     const { searchTerm, result } = this.state;
+    const page = (result && result.page) || 0;
     return (
       <div className="page">
         <div className="interactions">
@@ -76,14 +77,18 @@ class App extends Component {
           </Search> 
         </div>  
          
-        { result
-        ? 
+        { result &&
           <Table
           list={result.hits}
           onDismiss={this.onDismiss} 
           />
-          : null
-          }
+        }
+        <div className="interactions">
+            <Button onClick={() => this.fetchSearchTopstories(searchTerm, page + 1\
+              )}>
+               More
+            </Button>
+        </div>
       </div>  
     );
   }
