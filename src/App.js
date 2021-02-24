@@ -33,7 +33,20 @@ class App extends Component {
     this.onDismiss = this.onDismiss.bind(this);
   }
   setSearchTopstories(result) {
-    this.setState({ result });
+    const {hits, page} = result;
+
+    const oldHits = page !== 0
+      ? this.state.result.hits
+      : [];
+
+    const updatedHits = [
+      ...oldHits,
+      ...hits,
+    ];
+
+    this.setState({ 
+      result: {hits: updatedHits, page}
+    });
   }
 
   fetchSearchTopstories(searchTerm, page) {
@@ -84,7 +97,7 @@ class App extends Component {
           />
         }
         <div className="interactions">
-            <Button onClick={() => this.fetchSearchTopstories(searchTerm, page + 1\
+            <Button onClick={() => this.fetchSearchTopstories(searchTerm, page + 1
               )}>
                More
             </Button>
