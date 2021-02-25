@@ -84,8 +84,9 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, result } = this.state;
-    const page = (result && result.page) || 0;
+    const { searchTerm, results, searchKey } = this.state;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
+    const list = (results && results[searchKey] && results[searchKey].hits) || [];
     return (
       <div className="page">
         <div className="interactions">
@@ -98,15 +99,12 @@ class App extends Component {
           Search
           </Search> 
         </div>  
-         
-        { result &&
           <Table
-          list={result.hits}
+          list={list}
           onDismiss={this.onDismiss} 
           />
-        }
         <div className="interactions">
-            <Button onClick={() => this.fetchSearchTopstories(searchTerm, page + 1
+            <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1
               )}>
                More
             </Button>
